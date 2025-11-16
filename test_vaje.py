@@ -48,8 +48,6 @@ def span(s):
 def sami_sodi(s):
     return s == [] or (s[0]%2 == 0 and sami_sodi(s[1:]))
 
-
-
 #tukaj nadaljuj
 
 import unittest
