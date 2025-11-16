@@ -50,7 +50,7 @@ def sami_sodi(s):
 
 
 
-
+#tukaj nadaljuj
 
 import unittest
 
