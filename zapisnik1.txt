@@ -1,0 +1,18 @@
+slika,Berta,31
+slika,Ana,33
+slika,Berta,35
+slika,Fanči,37
+slika,Ana,40
+slika,Fanči,45
+pozlačen dežnik,Ema,29
+Meldrumove vaze,Greta,44
+Meldrumove vaze,Ana,53
+Meldrumove vaze,Fanči,76
+Meldrumove vaze,Cilka,78
+skodelice,Dani,50
+skodelice,Berta,55
+skodelice,Dani,60
+skodelice,Berta,61
+skodelice,Berta,76
+skodelice,Dani,80
+skodelice,Berta,83        
