@@ -3,6 +3,24 @@ import unittest
 import os
 import warnings
 
+#tukaj je moja koda
+def unikati(s):
+    s2 = []
+    for ime in s:
+        if ime not in s2:
+            s2.append(ime)
+    return s2
+
+def skupnih(s, t):
+    s = unikati(s)
+    t = unikati(t)
+
+
+
+
+#tukaj so pa testi
+
+
 with open("zapisnik.txt", "wt", encoding="utf-8") as f:
     f.write("""slika,Berta,31
 slika,Ana,33
