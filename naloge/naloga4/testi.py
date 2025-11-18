@@ -4,6 +4,8 @@ import os
 import warnings
 
 #tukaj je moja koda
+
+#seznami
 def unikati(s):
     s2 = []
     for ime in s:
@@ -29,6 +31,16 @@ def vseh(s, t):
     skupek = unikati(skupek)
     print(len(skupek), skupek)
     return len(skupek)
+
+#procesiranje seznamov
+def preberi_datoteko(ime_dat):
+    v = []
+    for vrstica in open(ime_dat):
+        #st_elementov = vrstica.count(",") + 1
+        v.append(vrstica.split(","))
+    return v
+
+
 
 #tukaj so pa testi
 

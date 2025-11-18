@@ -27,3 +27,21 @@ def vseh(s, t):
 vseh(["Ana", "Berta", "Ana", "Ana", "Cilka"], ["Cilka", "Dani", "Ana", "Ana"])
 
 #unikati(["Ana", "Ana", "Berta", "Cilka", "Ana", "Berta", "Berta", "Berta", "Ema", "Dani", "Cilka"])
+
+a = []
+a.append('a')
+a.append('b')
+print(len(a))
+
+def preberi_datoteko(ime_dat):
+    v = []
+    a = []
+    for vrstica in open(ime_dat):
+        st_elementov = vrstica.count(",") + 1
+        v.append(vrstica.strip().split(","))
+        #v.append(a)
+    print(v)
+    print(st_elementov)
+    return v
+
+neki = preberi_datoteko("kolesa.txt")
