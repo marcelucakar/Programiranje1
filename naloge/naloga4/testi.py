@@ -12,11 +12,23 @@ def unikati(s):
     return s2
 
 def skupnih(s, t):
+    skupnih = 0
     s = unikati(s)
     t = unikati(t)
+    
+    for element in s:
+        for e in t:
+            if element == e:
+                skupnih += 1
+    return skupnih
 
-
-
+def vseh(s, t):
+    i = 0
+    skupek = []
+    skupek = s + t
+    skupek = unikati(skupek)
+    print(len(skupek), skupek)
+    return len(skupek)
 
 #tukaj so pa testi
 
