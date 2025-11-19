@@ -1,4 +1,3 @@
-
 import unittest
 import os
 import warnings
@@ -36,12 +35,63 @@ def vseh(s, t):
 def preberi_datoteko(ime_dat):
     v = []
     for vrstica in open(ime_dat):
-        #st_elementov = vrstica.count(",") + 1
+        #st_elementov = vrstica.count(",") + 1  -- ce potrebujemo slucajno kdaj naslednjic st. elementov ki jih ima posamezna vrstica v datoteki
         v.append(vrstica.split(","))
     return v
 
+def filtriran(s, stolpec, vrednost):
+    tmp = []    #isto kot "v" pri prejsni funkciji, sam se mi zdi bolj kul uporabit tmp
+    for vrstica in s:
+        if vrstica[stolpec] == vrednost:
+            tmp.append(vrstica)
+    return tmp
+
+def izlusci(s, vrednost):
+    tmp = []
+    for vrstica in s:
+        tmp.append(vrstica[vrednost])
+    return tmp
+
+#drazbaaa
+
+def predmeti(ime_dat, oseba):
+    tmp = []
+    koncni_tmp = [] # a se da to bolje optimizirat?? ni mi vsec, da potrebujem dva seznama...
+    prejsnji = "1234567890"
+    tmp = filtriran(preberi_datoteko(ime_dat), 1, oseba)
+    for vrstica in tmp:
+        if prejsnji != vrstica[0]:
+            koncni_tmp.append(vrstica[0])
+        prejsnji = vrstica[0]
+    return koncni_tmp
+
+def osebe(ime_dat, predmet):
+    tmp = []
+    koncni_tmp = []
+    tmp = filtriran(preberi_datoteko(ime_dat), 0, predmet)
+    for vrstica in tmp:
+        if vrstica[1] not in koncni_tmp:
+            koncni_tmp.append(vrstica[1])
+    return koncni_tmp
 
 
+def podobnost_oseb(ime_dat, oseba1, oseba2):
+    predmet1 = predmeti(ime_dat, oseba1)
+    predmet2 = predmeti(ime_dat, oseba2)
+    inter = unikati([x for x in predmet1 if x in predmet2])
+    uni = unikati(predmet1 + predmet2)
+    if len(uni) == 0:
+        return 1.0
+    return len(inter) / len(uni)
+
+
+def podobnost_predmetov(ime_dat, predmet1, predmet2):
+    o1 = set(osebe(ime_dat, predmet1))
+    o2 = set(osebe(ime_dat, predmet2))
+    uni = o1 | o2
+    if len(uni) == 0:
+        return 1.0
+    return len(o1 & o2) / len(uni)
 #tukaj so pa testi
 
 
