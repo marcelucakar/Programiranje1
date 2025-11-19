@@ -31,7 +31,7 @@ def skupnih(s, t):
     print(len(skupek), skupek)
     return len(skupek)
 
-def vseh2(s, t):
+def vseh(s, t):
     return len(unikati(s + t))
 
 #procesiranje seznamov
