@@ -86,13 +86,15 @@ def podobnost_oseb(ime_dat, oseba1, oseba2):
 
 
 def podobnost_predmetov(ime_dat, predmet1, predmet2):
-    o1 = set(osebe(ime_dat, predmet1))
-    o2 = set(osebe(ime_dat, predmet2))
-    uni = o1 | o2
+    oseba1 = osebe(ime_dat, predmet1)
+    oseba2 = osebe(ime_dat, predmet2)
+    uni = unikati(oseba1 + oseba2)
     if len(uni) == 0:
         return 1.0
-    return len(o1 & o2) / len(uni)
+    inter = unikati([x for x in oseba1 if x in oseba2])
+    return len(inter) / len(uni)
 #tukaj so pa testi
+
 
 
 with open("zapisnik.txt", "wt", encoding="utf-8") as f:
