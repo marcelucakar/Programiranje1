@@ -23,13 +23,16 @@ def skupnih(s, t):
                 skupnih += 1
     return skupnih
 
-def vseh(s, t):
+# def vseh(s, t):
     i = 0
     skupek = []
     skupek = s + t
     skupek = unikati(skupek)
     print(len(skupek), skupek)
     return len(skupek)
+
+def vseh2(s, t):
+    return len(unikati(s + t))
 
 #procesiranje seznamov
 def preberi_datoteko(ime_dat):
@@ -83,6 +86,8 @@ def podobnost_oseb(ime_dat, oseba1, oseba2):
     if len(uni) == 0:
         return 1.0
     return len(inter) / len(uni)
+
+
 
 
 def podobnost_predmetov(ime_dat, predmet1, predmet2):
