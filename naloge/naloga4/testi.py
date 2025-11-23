@@ -77,16 +77,23 @@ def osebe(ime_dat, predmet):
             koncni_tmp.append(vrstica[1])
     return koncni_tmp
 
+def podobnost(s, t):
+    return skupnih(s, t) / vseh(s, t)
 
 def podobnost_oseb(ime_dat, oseba1, oseba2):
-    predmet1 = predmeti(ime_dat, oseba1)
-    predmet2 = predmeti(ime_dat, oseba2)
-    inter = unikati([x for x in predmet1 if x in predmet2])
-    uni = unikati(predmet1 + predmet2)
-    if len(uni) == 0:
-        return 1.0
-    return len(inter) / len(uni)
+    return podobnost(predmeti(ime_dat, oseba1), predmeti(ime_dat, oseba2))
 
+
+#def podobnost_oseb(ime_dat, oseba1, oseba2):
+#    predmet1 = predmeti(ime_dat, oseba1)
+#    predmet2 = predmeti(ime_dat, oseba2)
+#    inter = unikati([x for x in predmet1 if x in predmet2])
+#    uni = unikati(predmet1 + predmet2)
+#    if len(uni) == 0:
+#        return 1.0
+#    return len(inter) / len(uni)
+
+#dodatno iz predavanj
 
 
 
