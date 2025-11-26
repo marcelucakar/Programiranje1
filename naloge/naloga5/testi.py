@@ -1,27 +1,90 @@
+import csv
+import glob
+import os
 
+def kodirnik_postaj():
+    postaje = {}
+    folder = os.path.join(os.path.dirname(__file__), "vreme")
+    for filepath in glob.glob(os.path.join(folder, "*.csv")):
 
+        with open(filepath, "r") as f:
+            reader = csv.DictReader(f)
+            row = next(reader)
+            postaja = row.get("STATION", "").strip()
+            ime = row.get("NAME", "").strip()
 
+            ime = ime.split(",")[0].title()
+            postaje[ime] = postaja
+    
+    return postaje
 
-popravki = {'Murska Sobota Rakican': 'Murska Sobota',
-    'Crnomelj Doblice': 'Črnomelj',
-    'Letalisce Edvarda Rusjana Mari': 'Maribor',
-    'Letalisce Jozeta Pucnika Ljubl': 'Brnik',
-    'Ljubljana Bezigrad': 'Ljubljana',
-    'Kocevje': 'Kočevje',
-    'Smartno Pri Slovenj Gradcu': 'Smartno pri Slovenj Gradcu',
-    'Kredarica': 'Kredarica',
-    'Veliki Dolenci': 'Veliki Dolenci',
-    'Novo Mesto': 'Novo mesto',
-    'Nova Vas Na Blokah': 'Bloke',
-    'Celje Medlog': 'Celje',
-    'Portoroz Letalisce': 'Portorož',
-    'Topol Pri Medvodah': 'Topol pri Medvodah',
-    'Ratece Planica': 'Rateče'
+def popravi(kodirnik):
+    popravki = {
+        'Murska Sobota Rakican': 'Murska Sobota',
+        'Crnomelj Doblice': 'Črnomelj',
+        'Letalisce Edvarda Rusjana Mari': 'Maribor',
+        'Letalisce Jozeta Pucnika Ljubl': 'Brnik',
+        'Ljubljana Bezigrad': 'Ljubljana',
+        'Kocevje': 'Kočevje',
+        'Smartno Pri Slovenj Gradcu': 'Smartno pri Slovenj Gradcu',
+        'Kredarica': 'Kredarica',
+        'Veliki Dolenci': 'Veliki Dolenci',
+        'Novo Mesto': 'Novo mesto',
+        'Nova Vas Na Blokah': 'Bloke',
+        'Celje Medlog': 'Celje',
+        'Portoroz Letalisce': 'Portorož',
+        'Topol Pri Medvodah': 'Topol pri Medvodah',
+        'Ratece Planica': 'Rateče'
     }
+    for stari in list(kodirnik.keys()):
+        if stari in popravki:
+            nov = popravki[stari]
+            kodirnik[nov] = kodirnik.pop(stari)
+    return kodirnik
 
+
+def preberi_meritve(ime_postaje, kodirnik):
+    temperature = {}
+    sifra = kodirnik.get(ime_postaje)
+
+    dat = os.path.join(os.path.dirname(__file__), "vreme")
+
+    for filepath in glob.glob(os.path.join(dat, "*.csv")):
+        with open(filepath, "r") as f:
+            reader = csv.DictReader(f)
+            #row = next(reader)
+            for row in reader:
+                postaja = row.get("STATION", "").strip()
+                if postaja != sifra:
+                    continue
+                
+                datum_raw = row.get("DATE", "").strip()
+                tmax = row.get("TMAX", "").strip()
+                leto, mesec, dan = map(int, datum_raw.split("-"))
+                datum = (leto, mesec, dan)
+
+                if tmax == "":
+                    continue
+                else:
+                    tmax = float(tmax)
+                    tmax = tmax / 10.0
+
+                temperature[datum] = tmax
+
+    return temperature
+
+
+def mrzli_silvester(podatki):
+    silvester_slovar = {}
+    for datum in podatki:
+        if datum[1] == 12 and datum[2] == 31:
+            silvester_slovar[datum[0]] = podatki[datum]
+    najhladnejsi = min(silvester_slovar, key=silvester_slovar.get)
+    return najhladnejsi
 
 import unittest
 import warnings
+
 
 class Test(unittest.TestCase):
     def setUp(self):
