@@ -1,7 +1,8 @@
 import csv
 import glob
 import os
-
+import math
+#tuki bi lahko še preveril, ali se koncnica datoteke konca z .csv
 def kodirnik_postaj():
     postaje = {}
     folder = os.path.join(os.path.dirname(__file__), "vreme")
@@ -18,29 +19,34 @@ def kodirnik_postaj():
     
     return postaje
 
+
+popravki = {
+    'Murska Sobota Rakican': 'Murska Sobota',
+    'Crnomelj Doblice': 'Črnomelj',
+    'Letalisce Edvarda Rusjana Mari': 'Maribor',
+    'Letalisce Jozeta Pucnika Ljubl': 'Brnik',
+    'Ljubljana Bezigrad': 'Ljubljana',
+    'Kocevje': 'Kočevje',
+    'Smartno Pri Slovenj Gradcu': 'Smartno pri Slovenj Gradcu',
+    'Kredarica': 'Kredarica',
+    'Veliki Dolenci': 'Veliki Dolenci',
+    'Novo Mesto': 'Novo mesto',
+    'Nova Vas Na Blokah': 'Bloke',
+    'Celje Medlog': 'Celje',
+    'Portoroz Letalisce': 'Portorož',
+    'Topol Pri Medvodah': 'Topol pri Medvodah',
+    'Ratece Planica': 'Rateče'
+}
+    #for stari in list(kodirnik.keys()):
+    #    if stari in popravki:
+    #        nov = popravki[stari]
+    #        kodirnik[nov] = kodirnik.pop(stari)
 def popravi(kodirnik):
-    popravki = {
-        'Murska Sobota Rakican': 'Murska Sobota',
-        'Crnomelj Doblice': 'Črnomelj',
-        'Letalisce Edvarda Rusjana Mari': 'Maribor',
-        'Letalisce Jozeta Pucnika Ljubl': 'Brnik',
-        'Ljubljana Bezigrad': 'Ljubljana',
-        'Kocevje': 'Kočevje',
-        'Smartno Pri Slovenj Gradcu': 'Smartno pri Slovenj Gradcu',
-        'Kredarica': 'Kredarica',
-        'Veliki Dolenci': 'Veliki Dolenci',
-        'Novo Mesto': 'Novo mesto',
-        'Nova Vas Na Blokah': 'Bloke',
-        'Celje Medlog': 'Celje',
-        'Portoroz Letalisce': 'Portorož',
-        'Topol Pri Medvodah': 'Topol pri Medvodah',
-        'Ratece Planica': 'Rateče'
-    }
-    for stari in list(kodirnik.keys()):
-        if stari in popravki:
-            nov = popravki[stari]
-            kodirnik[nov] = kodirnik.pop(stari)
-    return kodirnik
+    for ime, zamenjava in popravki.items():
+        kodirnik[zamenjava] = kodirnik.pop(ime)
+    #return kodirnik
+
+
 
 
 def preberi_meritve(ime_postaje, kodirnik):
@@ -77,10 +83,18 @@ def preberi_meritve(ime_postaje, kodirnik):
 def mrzli_silvester(podatki):
     silvester_slovar = {}
     for datum in podatki:
-        if datum[1] == 12 and datum[2] == 31:
+        #if datum[1] == 12 and datum[2] == 31:
+        if datum[1:] == (12, 31):
             silvester_slovar[datum[0]] = podatki[datum]
-    najhladnejsi = min(silvester_slovar, key=silvester_slovar.get)
+    najhladnejsi: object = min(silvester_slovar, key=silvester_slovar.get)
     return najhladnejsi
+
+def mrzli_silvester2(podatki):
+    naj_mraz = math.inf
+    for leto in range(1900, 2026):
+        datum = (leto, 12, 31)
+        if podatki.get(datum, math.inf): # če ne obstaja, dodeli math.inf
+            
 
 import unittest
 import warnings
